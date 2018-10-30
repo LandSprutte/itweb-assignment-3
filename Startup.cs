@@ -51,7 +51,6 @@ namespace assignment3_db
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
 

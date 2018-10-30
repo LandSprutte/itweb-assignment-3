@@ -24,5 +24,7 @@ namespace assignment3_db.db
                 .WithMany(c => c.ComponentTypeCategories)
                 .HasForeignKey(ctc => ctc.CategoryId);
         }
+
+        public DbSet<assignment3_db.Models.Component> Component { get; set; }
     }
 }
