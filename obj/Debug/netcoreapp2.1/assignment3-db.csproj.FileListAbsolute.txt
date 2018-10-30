@@ -59,3 +59,8 @@ C:\Users\chris\projects\itweb-assignment-3\obj\Debug\netcoreapp2.1\Razor\Views\C
 C:\Users\chris\projects\itweb-assignment-3\obj\Debug\netcoreapp2.1\Razor\Views\Component\Details.g.cshtml.cs
 C:\Users\chris\projects\itweb-assignment-3\obj\Debug\netcoreapp2.1\Razor\Views\Component\Edit.g.cshtml.cs
 C:\Users\chris\projects\itweb-assignment-3\obj\Debug\netcoreapp2.1\Razor\Views\Component\Index.g.cshtml.cs
+C:\Users\chris\projects\itweb-assignment-3\obj\Debug\netcoreapp2.1\Razor\Views\Category\Create.g.cshtml.cs
+C:\Users\chris\projects\itweb-assignment-3\obj\Debug\netcoreapp2.1\Razor\Views\Category\Delete.g.cshtml.cs
+C:\Users\chris\projects\itweb-assignment-3\obj\Debug\netcoreapp2.1\Razor\Views\Category\Details.g.cshtml.cs
+C:\Users\chris\projects\itweb-assignment-3\obj\Debug\netcoreapp2.1\Razor\Views\Category\Edit.g.cshtml.cs
+C:\Users\chris\projects\itweb-assignment-3\obj\Debug\netcoreapp2.1\Razor\Views\Category\Index.g.cshtml.cs
