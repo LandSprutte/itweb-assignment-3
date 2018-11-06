@@ -32,5 +32,6 @@ namespace assignment3_db.db
         public DbSet<assignment3_db.Models.ComponentType> ComponentType { get; set; }
 
         public DbSet<assignment3_db.Models.ESImage> ESImage { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }
