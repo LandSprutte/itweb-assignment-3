@@ -1,3 +1,22 @@
+<<<<<<< HEAD
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "assignment3-db", "assignment3-db.csproj", "{C71260EC-EBED-4E4B-8BC6-8B93D5FAAA89}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C71260EC-EBED-4E4B-8BC6-8B93D5FAAA89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C71260EC-EBED-4E4B-8BC6-8B93D5FAAA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C71260EC-EBED-4E4B-8BC6-8B93D5FAAA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C71260EC-EBED-4E4B-8BC6-8B93D5FAAA89}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
+=======
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
@@ -23,3 +42,4 @@ Global
 		SolutionGuid = {EAEA40A5-F178-4E43-84D2-A6BFEA6ADD80}
 	EndGlobalSection
 EndGlobal
+>>>>>>> 5ea1016c1c1a4dc3606188e26ee02ca054b9db2b
