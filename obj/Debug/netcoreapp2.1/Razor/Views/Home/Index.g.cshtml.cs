@@ -61,7 +61,7 @@ using assignment3_db.Models;
             WriteLiteral("\r\n<h1>Welcome to the new Embedded stocks shop!</h1>\r\n\r\n<p>From here you can add, create, update and delete different component models.</p>\r\n\r\n<p>but first you need to login, login here</p>\r\n\r\n");
             EndContext();
             BeginContext(224, 60, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "385181f6e1f8459eb18f032ebbd55d9c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3ffd9e84262f4f42be8b0a80e2c6261b", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_TagHelpers_AnchorTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.AnchorTagHelper>();

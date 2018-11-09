@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using assignment3_db.db;
+using assignment3_db.Services;
 
 namespace assignment3_db
 {
@@ -35,6 +36,7 @@ namespace assignment3_db
             
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddTransient<IValidationService,AuthenticationService>();
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=EmbeddedStockDb;Trusted_Connection=True";
             
