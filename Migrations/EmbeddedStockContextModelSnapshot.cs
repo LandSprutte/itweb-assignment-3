@@ -123,6 +123,21 @@ namespace assignment3db.Migrations
                     b.ToTable("ESImage");
                 });
 
+            modelBuilder.Entity("assignment3_db.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("UserRole");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("assignment3_db.Models.Component", b =>
                 {
                     b.HasOne("assignment3_db.Models.ComponentType")
