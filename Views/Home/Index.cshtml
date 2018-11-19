@@ -8,4 +8,10 @@
 
 <p>but first you need to login, login here</p>
 
-<a asp-controller="LoginController" asp-action="Login" ></a>
+<a asp-controller="Login" asp-action="Index" >Click me</a>
+
+<script>
+
+    const a = "@ViewBag.token";
+    if (a !== "notset") localStorage.setItem('token', a);
+</script>

@@ -10,8 +10,9 @@ namespace assignment3_db.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string token)
         {
+            ViewBag.token = token ?? "notset";
             return View();
         }
     }

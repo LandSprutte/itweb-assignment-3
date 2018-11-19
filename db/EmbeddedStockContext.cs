@@ -23,6 +23,9 @@ namespace assignment3_db.db
                 .HasOne(ctc => ctc.Category)
                 .WithMany(c => c.ComponentTypeCategories)
                 .HasForeignKey(ctc => ctc.CategoryId);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(user => new { user.Name }).IsUnique();
         }
 
         public DbSet<assignment3_db.Models.Component> Component { get; set; }

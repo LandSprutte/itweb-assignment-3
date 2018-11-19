@@ -10,8 +10,8 @@ using assignment3_db.db;
 namespace assignment3db.Migrations
 {
     [DbContext(typeof(EmbeddedStockContext))]
-    [Migration("20181106113329_userModel")]
-    partial class userModel
+    [Migration("20181119182038_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -131,11 +131,18 @@ namespace assignment3db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25);
+
+                    b.Property<string>("Password");
 
                     b.Property<int>("UserRole");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("User");
                 });

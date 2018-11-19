@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Remotion.Linq.Clauses;
 
 namespace assignment3_db.Models
 {
@@ -13,13 +14,14 @@ namespace assignment3_db.Models
         [MinLength(4)]
         [MaxLength(25)]
         public string Name { get; set; }
+        public string Password { get; set; }
         public UserRoles UserRole { get; set; }
         
     }
 
     public enum UserRoles
     {
-        BASIC_USER,
-        ADMIN_USER
+        BasicUser,
+        AdminUser
     }
 }

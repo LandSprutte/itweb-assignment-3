@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace assignment3db.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,6 +34,21 @@ namespace assignment3db.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ESImage", x => x.ESImageId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 25, nullable: false),
+                    Password = table.Column<string>(nullable: true),
+                    UserRole = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -127,6 +142,12 @@ namespace assignment3db.Migrations
                 name: "IX_ComponentTypeCategory_ComponentTypeId",
                 table: "ComponentTypeCategory",
                 column: "ComponentTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_Name",
+                table: "User",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -136,6 +157,9 @@ namespace assignment3db.Migrations
 
             migrationBuilder.DropTable(
                 name: "ComponentTypeCategory");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Category");

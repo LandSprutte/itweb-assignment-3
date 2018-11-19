@@ -1,48 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using assignment3_db.db;
 using assignment3_db.Models;
 using assignment3_db.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.JsonWebTokens;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace assignment3_db.Controllers
 {
-
     public class LoginController : Controller
     {
-        private readonly EmbeddedStockContext _context;
-        private readonly AuthenticationService _authentication;
+        private EmbeddedStockContext _embeddedStock;
+        private IValidationService _validationService;
 
-        public LoginController(EmbeddedStockContext context, AuthenticationService authentication)
+        public LoginController(EmbeddedStockContext embeddedStock, IValidationService validationService)
         {
-            _context = context;
-            _authentication = authentication;
+            _embeddedStock = embeddedStock;
+            _validationService = validationService;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
         }
         [HttpPost]
-        public ActionResult<string> Index([FromBody]User user)
+        public async Task<IActionResult> Login([Bind("Username, Password")] Authentication login)
         {
-            try
-            {
-                var u = _context.User.FirstOrDefault(user1 => user1.Name==user.Name);
-                if (u == null)
-                {
-                    return BadRequest("No user with matching params");
-                }
-
-
-                return Ok(_authentication.SignToken(u));
-            }
-            catch (Exception e)
-            {
-                return BadRequest("An error happended " + e.Message);
-            }
-
+            var u = await _embeddedStock.User.FirstOrDefaultAsync(i => i.Name == login.Username);
+            return BCrypt.Net.BCrypt.Verify(login.Password, u.Password)
+                ? RedirectToAction("Index", "Home", new {token=_validationService.SignToken(u)})
+                : RedirectToAction(nameof(Index));
         }
     }
 }

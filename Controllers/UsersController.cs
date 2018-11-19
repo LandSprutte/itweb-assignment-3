@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using assignment3_db.Models;
 using assignment3_db.db;
+using BCrypt.Net;
 
 namespace assignment3_db.Controllers
 {
@@ -54,11 +55,17 @@ namespace assignment3_db.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,UserRole")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Name,UserRole, Password")] User user)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                var u1 = new User
+                {
+                    Name = user.Name,
+                    Password = BCrypt.Net.BCrypt.HashPassword(user.Password),
+                    UserRole = user.UserRole
+                };
+                _context.Add(u1);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

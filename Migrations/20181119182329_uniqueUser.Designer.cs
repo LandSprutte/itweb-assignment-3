@@ -10,8 +10,8 @@ using assignment3_db.db;
 namespace assignment3db.Migrations
 {
     [DbContext(typeof(EmbeddedStockContext))]
-    [Migration("20181030145217_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20181119182329_uniqueUser")]
+    partial class uniqueUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -123,6 +123,28 @@ namespace assignment3db.Migrations
                     b.HasKey("ESImageId");
 
                     b.ToTable("ESImage");
+                });
+
+            modelBuilder.Entity("assignment3_db.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25);
+
+                    b.Property<string>("Password");
+
+                    b.Property<int>("UserRole");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("assignment3_db.Models.Component", b =>
