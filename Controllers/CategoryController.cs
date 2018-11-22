@@ -41,11 +41,13 @@ namespace assignment3_db.Controllers
                 return NotFound();
             }
 
-            CategoryViewModel vm = new CategoryViewModel 
+            CategoryViewModel vm = new CategoryViewModel
             {
                 Name = category.Name,
                 CategoryId = category.CategoryId.ToString(),
-                DisplayComponentTypes = category.ComponentTypeCategories.Select(ctc => ctc.ComponentType).ToList(),
+                DisplayComponentTypes = _context.ComponentTypeCategory
+                                                .Where(i => i.CategoryId == category.CategoryId)
+                                                .Select(ctc => ctc.ComponentType).ToList(),
             };
 
             return View(vm);
@@ -57,7 +59,8 @@ namespace assignment3_db.Controllers
             CategoryViewModel vm = new CategoryViewModel();
 
             List<SelectListItem> componentTypesAsSelectList = await _context.ComponentType.Select(ct =>
-                new SelectListItem() {
+                new SelectListItem()
+                {
                     Value = ct.ComponentTypeId.ToString(),
                     Text = ct.ComponentName
                 }
@@ -77,7 +80,8 @@ namespace assignment3_db.Controllers
         {
             if (ModelState.IsValid)
             {
-                Category tempCategory = new Category() {
+                Category tempCategory = new Category()
+                {
                     Name = categoryVM.Name,
                 };
 
@@ -86,17 +90,13 @@ namespace assignment3_db.Controllers
                 foreach (var id in categoryVM.SelectedComponentTypes)
                 {
                     ComponentType componentType = _context.ComponentType.Find(long.Parse(id));
-                    
-                    ComponentTypeCategory tempCtc = new ComponentTypeCategory 
+
+                    ComponentTypeCategory tempCtc = new ComponentTypeCategory
                     {
-                        CategoryId = category.CategoryId,
-                        ComponentTypeId = componentType.ComponentTypeId,
                         Category = category,
                         ComponentType = componentType
                     };
                     ComponentTypeCategory ctc = _context.Add(tempCtc).Entity;
-
-                    category.ComponentTypeCategories.Add(ctc);
                 }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -112,12 +112,28 @@ namespace assignment3_db.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
                 return NotFound();
             }
-            return View(category);
+
+            List<SelectListItem> componentTypesAsSelectList = await _context.ComponentType.Select(ct =>
+                new SelectListItem()
+                {
+                    Value = ct.ComponentTypeId.ToString(),
+                    Text = ct.ComponentName
+                }
+            ).ToListAsync();
+
+            CategoryViewModel vm = new CategoryViewModel
+            {
+                Name = category.Name,
+                CategoryId = category.CategoryId.ToString(),
+                ComponentTypes = new MultiSelectList(componentTypesAsSelectList.OrderBy(ct => ct.Text), "Value", "Text")
+            };
+            return View(vm);
         }
 
         // POST: Category/Edit/5
@@ -125,15 +141,41 @@ namespace assignment3_db.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("CategoryId,Name")] Category category)
+        public async Task<IActionResult> Edit(long id, [Bind("Name, SelectedComponentTypes, CategoryId")] CategoryViewModel vm)
         {
-            if (id != category.CategoryId)
+            if (id != long.Parse(vm.CategoryId))
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                // Find category including the linked ComponentTypeCategories
+                Category category = _context.Category
+                                            .Include(c => c.ComponentTypeCategories)
+                                            .Single(c => c.CategoryId == id);
+
+                category.Name = vm.Name;
+
+                foreach (var sid in vm.SelectedComponentTypes)
+                {
+                    ComponentType componentType = _context.ComponentType.Find(long.Parse(sid));
+
+                    var isPresent = category.ComponentTypeCategories.Single(ctc => ctc.ComponentType == componentType);
+
+                    if (isPresent == null)
+                    {
+                        var tempCtc = new ComponentTypeCategory
+                        {
+                            Category = category,
+                            ComponentType = componentType
+                        };
+                        ComponentTypeCategory ctc = _context.Add(tempCtc).Entity;
+
+                        category.ComponentTypeCategories.Add(ctc);
+                    }
+                }
+
                 try
                 {
                     _context.Update(category);
@@ -152,7 +194,7 @@ namespace assignment3_db.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(vm);
         }
 
         // GET: Category/Delete/5

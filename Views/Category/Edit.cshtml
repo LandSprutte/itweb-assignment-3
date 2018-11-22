@@ -1,4 +1,4 @@
-@model assignment3_db.Models.Category
+@model assignment3_db.ViewModels.CategoryViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -18,6 +18,13 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="ComponentTypes" class="control-label"></label>
+                @Html.ListBoxFor(m => Model.SelectedComponentTypes, Model.ComponentTypes, new { @class = "form-control" })
+            </div>
+
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
