@@ -26,6 +26,8 @@ namespace assignment3_db.db
 
             modelBuilder.Entity<User>()
                 .HasIndex(user => new { user.Name }).IsUnique();
+
+            modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 1, Name = "Cat1"});
         }
 
         public DbSet<assignment3_db.Models.Component> Component { get; set; }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using assignment3_db.Models;
 using assignment3_db.db;
+using assignment3_db.ViewModels;
 
 namespace assignment3_db.Controllers
 {
@@ -44,9 +45,19 @@ namespace assignment3_db.Controllers
         }
 
         // GET: ComponentType/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var categoriesAsSelectList = await _context.Category.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.CategoryId.ToString()
+            }).ToListAsync();
+
+            ComponentTypeViewModel vm = new ComponentTypeViewModel
+            {
+                MultiSelectCategories = new MultiSelectList(categoriesAsSelectList.OrderBy(c => c.Text), "Value", "Text"),
+            };
+            return View(vm);
         }
 
         // POST: ComponentType/Create
@@ -54,15 +65,51 @@ namespace assignment3_db.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ComponentTypeId,ComponentName,ComponentInfo,Location,Status,Datasheet,ImageUrl,Manufacturer,WikiLink,AdminComment")] ComponentType componentType)
+        public async Task<IActionResult> Create([Bind("SelectedCategories, ComponentName,ComponentInfo,Location,Status,Datasheet,ImageUrl,Manufacturer,WikiLink,AdminComment")] ComponentTypeViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(componentType);
-                await _context.SaveChangesAsync();
+                ComponentType tempComponentType = new ComponentType()
+                {
+                    ComponentName = vm.ComponentName,
+                    AdminComment = vm.AdminComment,
+                    ComponentInfo = vm.ComponentInfo,
+                    Datasheet = vm.Datasheet,
+                    Location = vm.Location,
+                    WikiLink = vm.WikiLink,
+                    Status = vm.Status,
+                    Manufacturer = vm.Manufacturer,
+                    ImageUrl = vm.ImageUrl,
+                    Image = vm.Image,
+                };
+
+                try
+                {
+                    var componentType = _context.Add(tempComponentType).Entity;
+
+                    foreach (var id in vm.SelectedCategories)
+                    {
+                        Category cat = _context.Category.Find(long.Parse(id));
+
+                        if (cat != null)
+                        {
+                            ComponentTypeCategory ctc = new ComponentTypeCategory
+                            {
+                                Category = cat,
+                                ComponentType = componentType,
+                            };
+                            _context.Add(ctc);
+                        }
+                    }
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
                 return RedirectToAction(nameof(Index));
             }
-            return View(componentType);
+            return View(vm);
         }
 
         // GET: ComponentType/Edit/5
@@ -74,11 +121,36 @@ namespace assignment3_db.Controllers
             }
 
             var componentType = await _context.ComponentType.FindAsync(id);
+
             if (componentType == null)
             {
                 return NotFound();
             }
-            return View(componentType);
+
+            var categoriesAsSelectList = await _context.Category.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.CategoryId.ToString()
+            }).ToListAsync();
+
+            ComponentTypeViewModel vm = new ComponentTypeViewModel
+            {
+                ComponentName = componentType.ComponentName,
+                AdminComment = componentType.AdminComment,
+                ComponentInfo = componentType.ComponentInfo,
+                Datasheet = componentType.Datasheet,
+                Location = componentType.Location,
+                WikiLink = componentType.WikiLink,
+                Status = componentType.Status,
+                Manufacturer = componentType.Manufacturer,
+                ImageUrl = componentType.ImageUrl,
+                Image = componentType.Image,
+                MultiSelectCategories = new MultiSelectList(categoriesAsSelectList.OrderBy(c => c.Text), "Value", "Text"),
+                ComponentTypeId = componentType.ComponentTypeId,
+            };
+
+
+            return View(vm);
         }
 
         // POST: ComponentType/Edit/5

@@ -104,7 +104,7 @@ using assignment3_db.Models;
             WriteLiteral("\n        </dd>\n    </dl>\n</div>\n<div>\n    ");
             EndContext();
             BeginContext(511, 54, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5c00467697084640b6500157a91349b8", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "19efc4f596f74fe7861b58eaa3d3a0e9", async() => {
                 BeginContext(557, 4, true);
                 WriteLiteral("Edit");
                 EndContext();
@@ -139,7 +139,7 @@ using assignment3_db.Models;
             WriteLiteral(" |\n    ");
             EndContext();
             BeginContext(572, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0bcf473192d1439b8e227457f57a600c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8c14128cb6c744d1ab96597fe35d201d", async() => {
                 BeginContext(594, 12, true);
                 WriteLiteral("Back to List");
                 EndContext();

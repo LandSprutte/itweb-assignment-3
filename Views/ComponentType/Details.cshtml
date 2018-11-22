@@ -1,4 +1,4 @@
-@model assignment3_db.Models.ComponentType
+@model assignment3_db.ViewModels.ComponentTypeViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -64,6 +64,14 @@
         <dd>
             @Html.DisplayFor(model => model.AdminComment)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Categories)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Categories)
+        </dd>
+
     </dl>
 </div>
 <div>
