@@ -1,4 +1,4 @@
-@model assignment3_db.Models.Category
+@model assignment3_db.ViewModels.CategoryViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -16,6 +16,14 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
+
+        @foreach (var componentType in Model.DisplayComponentTypes)
+        {
+            <p>
+                @Html.DisplayFor(model => componentType.ComponentName)
+            </p>
+        }
+
     </dl>
 </div>
 <div>
